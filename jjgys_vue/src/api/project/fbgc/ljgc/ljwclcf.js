@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-const api_name = '/jjg/fbgc/qlgc/qmhp'
+const api_name = '/jjg/fbgc/ljgc/ljwclcf'
 
 export default {
   // 生成鉴定表
@@ -13,27 +13,27 @@ export default {
     })
   },
   // 下载鉴定表
-  download(proname,htd,fbgc){
+  download(proname,htd){
     return request({
-      url: `${api_name}/download?proname=`+proname+'&htd='+htd+'&fbgc='+fbgc,
+      url: `${api_name}/download?proname=`+proname+'&htd='+htd,
       method: 'get',
       responseType: 'blob',
       
       
     })
   },
-  // 导出模板
-  exportqmpzd(){
+  // 导出模板文件
+  exportljwclcf(){
     return request({
-      url: `${api_name}/export`,
+      url: `${api_name}/exportljwclcf`,
       method: 'get',
       responseType: 'blob', // 使用blob下载
     })
   },
   // 导入文件
-  importqmpzd(params){
+  importljwclcf(params){
     return request({
-      url: `${api_name}/importqmhp`,
+      url: `${api_name}/importljwclcf`,
       method: 'post',
       data:params, // 使用blob下载
       
@@ -51,7 +51,7 @@ export default {
   // 通过id查询
   getById(id){
     return request({
-      url: `${api_name}/getQmhp`+id,
+      url: `${api_name}/getLjwcLcf/`+id,
       method: 'get',
       
     })

@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-const api_name = '/jjg/fbgc/qlgc/qmhp'
+const api_name = '/jjg/fbgc/ljgc/zddmcc'
 
 export default {
   // 生成鉴定表
@@ -13,9 +13,9 @@ export default {
     })
   },
   // 下载鉴定表
-  download(proname,htd,fbgc){
+  download(proname,htd){
     return request({
-      url: `${api_name}/download?proname=`+proname+'&htd='+htd+'&fbgc='+fbgc,
+      url: `${api_name}/download?proname=`+proname+'&htd='+htd,
       method: 'get',
       responseType: 'blob',
       
@@ -23,17 +23,17 @@ export default {
     })
   },
   // 导出模板
-  exportqmpzd(){
+  exportzdbmpzd(){
     return request({
-      url: `${api_name}/export`,
+      url: `${api_name}/exportzddmcc`,
       method: 'get',
       responseType: 'blob', // 使用blob下载
     })
   },
-  // 导入文件
-  importqmpzd(params){
+  // 导入数据文件
+  importzdbmpzd(params){
     return request({
-      url: `${api_name}/importqmhp`,
+      url: `${api_name}/importzddmcc`,
       method: 'post',
       data:params, // 使用blob下载
       
@@ -51,7 +51,7 @@ export default {
   // 通过id查询
   getById(id){
     return request({
-      url: `${api_name}/getQmhp`+id,
+      url: `${api_name}/getZddmcc/`+id,
       method: 'get',
       
     })
@@ -69,7 +69,8 @@ export default {
     return request({
       url: `${api_name}/removeBatch`,
       method: `delete`,
-      data: idList
+      data: idList,
+      contentType:'text/plain'
     })
   },
 

@@ -286,7 +286,7 @@
               filename=filename.replace(/['"]/g, '')
               console.log('鉴定表',filename)
               console.log('鉴定表',decodeURI(filename))
-              FileSaver.saveAs(response.data,filename)
+              FileSaver.saveAs(response.data,decodeURI(filename))
               
 
               

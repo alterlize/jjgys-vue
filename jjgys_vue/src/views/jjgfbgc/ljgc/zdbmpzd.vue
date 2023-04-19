@@ -24,21 +24,21 @@
             <el-button
               class="btn-add"
               type="success"
-              @click="exportsdhp()"
+              @click="exportzdbmpzd()"
               style="margin-left: 0px"
               icon="el-icon-bottom"
               size="mini"
-              >导出隧道横坡文件</el-button
+              >导出支挡表面平整度模板文件</el-button
             >
             <!-- :disabled="$hasBP('bnt.ql.export')  === false" -->
             <el-button
               class="btn-add"
               type="success"
-              @click="importsdhp()"
+              @click="importzdbmpzd()"
               style="margin-left: 0px"
               icon="el-icon-top"
               size="mini"
-              >导入隧道横坡数据文件</el-button
+              >导入支挡表面平整度数据文件</el-button
             >
             <el-button
               class="btn-add"
@@ -85,10 +85,9 @@
           :data="list"
           border
           stripe
-          style="width: 100%;"
-          class="table"
           :header-cell-style="{ 'text-align': 'center' }"
           :cell-style="{ 'text-align': 'center' }"
+          
           @selection-change="handleSelectionChange"
         >
           <el-table-column type="selection" />
@@ -98,16 +97,19 @@
             </template>
           </el-table-column>
           <el-table-column prop="jcsj" label="检测时间" width="100px" />
-          <el-table-column prop="sdmc" label="隧道名称" width="180px" />
-          <el-table-column prop="lmlx" label="路面类型" width="180px" />
-          <el-table-column prop="zh" label="桩号" />
-          <el-table-column prop="wz" label="位置" />
-          <el-table-column prop="qsds" label="前视读数(mm)" width="120px"/>
-          <el-table-column prop="hsds" label="后视读数(mm)" width="120px"/>
-          <el-table-column prop="length" label="长" />
-          <el-table-column prop="sjz" label="设计值(%)" />
-          <el-table-column prop="yxps" label="允许偏差(%)" width="120px"/>
-          <el-table-column prop="createtime" label="创建时间" width="100px"/>
+          <el-table-column prop="zhjwz" label="桩号及位置" width="280px" />
+          <el-table-column prop="cjzh" label="抽检桩号"  />
+          <el-table-column prop="bw" label="部位" />
+          <el-table-column prop="lb" label="类别" />
+          <el-table-column prop="sjz" label="设计值(mm)" />
+          <el-table-column prop="scz" label="实测值(mm)" />
+          <el-table-column prop="yxwcz" label="允许误差+(mm)"  />
+          <el-table-column prop="yxwcf" label="允许误差-(mm)" />
+          <el-table-column prop="createtime" label="创建时间" width="100px" />
+          
+          
+          
+          
         </el-table>
         <!-- 分页组件 -->
         <el-pagination
@@ -159,32 +161,22 @@
           </span>
         </el-dialog>
         <el-dialog
-         title="隧道横坡鉴定表结果"
+         title="支挡表面平整度鉴定表结果"
          :visible="dialogVisible1">
-         <el-table
-          
-          :data="descriptions"
-          border
-          stripe
-          style="width: 100%;"
-          class="table"
-          :header-cell-style="{ 'text-align': 'center' }"
-          :cell-style="{ 'text-align': 'center' }"
-          
-        >
-          
-          
-          <el-table-column prop="合格点数" label="合格点数" />
-          
-          <el-table-column prop="合格率" label="合格率(%)" />
-          <el-table-column prop="总点数" label="总点数"  />
-          <el-table-column prop="检测项目" label="检测项目" width="250px"/>
-          
-         
-          
-          
-        </el-table>
-         
+         <el-descriptions :column="1"  border>
+          <el-descriptions-item>
+              <template slot="label" >合格点数</template>
+              {{descriptions["合格点数"]}}
+          </el-descriptions-item>
+          <el-descriptions-item>
+              <template slot="label" >检测总点数</template>
+              {{descriptions["检测总点数"]}}
+          </el-descriptions-item>
+          <el-descriptions-item>
+              <template slot="label" >合格率(%)</template>
+              {{descriptions["合格率"]}}
+          </el-descriptions-item>
+         </el-descriptions>
          <span slot="footer" class="dialog-footer">
           <el-button type="primary"  @click="dialogVisible1 = false">关闭</el-button>
          </span>
@@ -196,29 +188,29 @@
             <el-form-item label="检测时间" prop="jcsj">
               <el-input v-model="modifyData.jcsj"></el-input>
             </el-form-item>
-            <el-form-item label="隧道名称" prop="sdmc">
-              <el-input v-model="modifyData.sdmc"></el-input>
+            <el-form-item label="桩号及位置" prop="zhjwz">
+              <el-input v-model="modifyData.zhjwz"></el-input>
             </el-form-item>
-            <el-form-item label="路面类型" prop="lmlx">
-              <el-input v-model="modifyData.lmlx"></el-input>
+            <el-form-item label="抽检桩号" prop="cjzh">
+              <el-input v-model="modifyData.cjzh"></el-input>
             </el-form-item>
-            <el-form-item label="桩号" prop="zh">
-              <el-input v-model="modifyData.zh"></el-input>
+            <el-form-item label="部位" prop="bw">
+              <el-input v-model="modifyData.bw"></el-input>
             </el-form-item>
-            <el-form-item label="位置" prop="wz">
-              <el-input v-model="modifyData.wz"></el-input>
+            <el-form-item label="类别" prop="lb">
+              <el-input v-model="modifyData.lb"></el-input>
             </el-form-item>
-            <el-form-item label="前视读数(mm)" prop="qsds">
-              <el-input v-model="modifyData.qsds"></el-input>
+            <el-form-item label="设计值(mm)" prop="sjz">
+              <el-input v-model="modifyData.sjz"></el-input>
             </el-form-item>
-            <el-form-item label="后视读数(mm)" prop="hsds">
-              <el-input v-model="modifyData.hsds"></el-input>
+            <el-form-item label="实测值(mm)" prop="scz">
+              <el-input v-model="modifyData.scz"></el-input>
             </el-form-item>
-            <el-form-item label="长" prop="length">
-              <el-input v-model="modifyData.length"></el-input>
+            <el-form-item label="允许误差+(mm)" prop="yxwcz">
+              <el-input v-model="modifyData.yxwcz"></el-input>
             </el-form-item>
-            <el-form-item label="允许偏差(%)" prop="yxps">
-              <el-input v-model="modifyData.yxps"></el-input>
+            <el-form-item label="允许误差-(mm)" prop="yxwcf">
+              <el-input v-model="modifyData.yxwcf"></el-input>
             </el-form-item>
             
             <el-form-item label="创建时间" prop="createtime">
@@ -235,11 +227,11 @@
     </template>
     <script>
     // 引入定义接口js文件
-    import api from "@/api/project/fbgc/sdgc/sdhp.js";
+    import api from "@/api/project/fbgc/ljgc/zdbmpzd.js";
     import { getSystemErrorMap } from "util";
     import FileSaver from "file-saver"
     export default {
-      
+      name:'zddmcc',
       data() {
         // 初始值
         let value = this.$route.query.projecttitle
@@ -247,7 +239,11 @@
           data: {
             proname: value,
           },
-          descriptions: [],
+          descriptions: {
+             '合格点数':0,
+             '检测总点数':0,
+             '合格率':0
+            },
           dialogImportVisible: false,
           list: [], // 项目列表
           total: 0, // 总记录数
@@ -258,9 +254,6 @@
           dialogVisible: false,
           dialogVisible1:false,
           dialogVisible2:false,
-          proname:this.$route.query.projecttitle,
-          htd:this.$route.query.htdname,
-          fbgcName:this.$route.query.fbgcName,
           hdgqd: {},
           file:'',// 待上传文件
           fileList:[],
@@ -269,7 +262,7 @@
       },
       created() {
         // 页面渲染之前
-        //console.log(this.$route.query.projecttitle);
+        console.log(this.$route.query.projecttitle);
         //alert(this.$route.matched[1].meta.title)
         this.fetchData();
       },
@@ -280,21 +273,22 @@
         },
         scjdb(){
           let commonInfoVo={}
-          commonInfoVo.proname=this.proname
-          commonInfoVo.htd=this.htd
-          commonInfoVo.fbgc='桥面系'
+          commonInfoVo.proname=this.$route.query.projecttitle
+          commonInfoVo.htd=this.$route.query.htdname
+          commonInfoVo.fbgc='支挡工程'
           api.scjdb(commonInfoVo).then((res) => {
             
-            api.download(commonInfoVo.proname,commonInfoVo.htd,commonInfoVo.fbgc).then((response)=>{
+            api.download(commonInfoVo.proname,commonInfoVo.htd).then((response)=>{
               
               var temp = response.headers["content-disposition"]
-              
-              var filename=temp.split('=')[1]
-              filename=filename.replace(/['"]/g, '')
-              console.log('鉴定表',filename)
+              var filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+              var matches = filenameRegex.exec(temp);
+              var filename=''
+              if (matches != null && matches[1]) { 
+                filename = matches[1].replace(/['"]/g, '');
+              }
               console.log('鉴定表',decodeURI(filename))
               FileSaver.saveAs(response.data,decodeURI(filename))
-              
               
             })
             
@@ -304,15 +298,17 @@
         ckjdb(){
             this.dialogVisible1=true
             let commonInfoVo={}
-            commonInfoVo.proname=this.proname
-            commonInfoVo.htd=this.htd
-            commonInfoVo.fbgc='桥面系'
+            commonInfoVo.proname=this.$route.query.projecttitle
+            commonInfoVo.htd=this.$route.query.htdname
+            commonInfoVo.fbgc='支挡工程'
             api.lookjdb(commonInfoVo).then((res)=>{
-              console.log('tttt',res)
-              this.descriptions=res.data
+              
+              this.descriptions['合格点数']=res.data[0]["合格点数"]
+              this.descriptions['检测总点数']=res.data[0]["检测总点数"]
+              this.descriptions['合格率']=res.data[0]["合格率"]
             })
         },
-        importsdhp() {
+        importzdbmpzd() {
           this.dialogImportVisible = true;
         },
         // 上传文件触发
@@ -328,11 +324,11 @@
           
     
           fd.append('file',this.fileList[0].raw)
-          fd.append('proname',this.proname)
-          fd.append('htd',this.htd)
-          fd.append('fbgc','桥面系')
+          fd.append('proname',this.$route.query.projecttitle)
+          fd.append('htd',this.$route.query.htdname)
+          fd.append('fbgc','支挡工程')
           
-          api.importsdhp(fd).then((res)=>{
+          api.importzdbmpzd(fd).then((res)=>{
             console.log('res',res)
             if(res.message=='成功'){
               this.fetchData();
@@ -351,13 +347,13 @@
           
           
         },
-        exportsdhp() {
-          let projectname = this.proname;
-          let htd =this.htd
-          let fbgc=this.fbgcName
-          
+        exportzdbmpzd() {
+          let projectname = this.$route.query.projecttitle;
+          let htd =this.$route.query.htdname
+          let fbgc=this.$route.query.fbgcName
+          console.log(projectname)
           debugger
-          api.exportsdhp().then((res) => {
+          api.exportzdbmpzd().then((res) => {
             const objectUrl = URL.createObjectURL(
               new Blob([res.data], {
                 type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
@@ -365,7 +361,7 @@
             );
             const link = document.createElement("a");
             // 设置导出的文件名称
-            link.download = projectname +htd+fbgc+ `隧道横坡` + ".xlsx";
+            link.download = projectname +htd+fbgc+ `支挡表面平整度` + ".xlsx";
             link.style.display = "none";
             link.href = objectUrl;
             link.click();
@@ -429,6 +425,7 @@
               var id = obj.id;
               idList.push(id);
             }
+            
             // 调用接口删除
             api.batchRemove(idList).then((response) => {
               // 提示信息
@@ -446,15 +443,15 @@
           this.multipleSelection = selection;
         },
         fetchData() {
-          this.searchObj.proname = this.proname;
-          this.searchObj.htd=this.htd
-          this.searchObj.fbgc='桥面系'
-          
+          this.searchObj.proname = this.$route.query.projecttitle;
+          this.searchObj.htd=this.$route.query.htdname
+          this.searchObj.fbgc='支挡工程'
+         
           // 调用api
           api.pageList(this.page, this.limit, this.searchObj).then((response) => {
             this.list = response.data.records;
             this.total = response.data.total;
-            console.log('eeee',this.list)
+            console.log('jjj',this.list)
           });
         },
         // 改变每页显示的记录数
@@ -482,9 +479,5 @@
           float: right;
         }
       }
-    }
-    .app-container{
-      height: 100%;
-      overflow: hidden;
     }
     </style>

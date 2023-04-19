@@ -135,7 +135,7 @@ export default {
     },
     qmpzd() {
       let projecttitle = this.$route.query.projecttitle;
-      
+      this.$router.push({path:"/jjgfbgc/qlgc/qmpzd",query:{projecttitle:projecttitle,htdname:this.htdname,fbgcName:this.fbgcName}});
       //this.$router.push({path:"/jjgfbgc/ljgc/psdmcc",query:{projecttitle:projecttitle,htdname:this.htdname,fbgcName:this.fbgcName}});
     },
     qmhp() {

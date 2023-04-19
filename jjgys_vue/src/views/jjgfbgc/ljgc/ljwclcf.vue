@@ -24,21 +24,21 @@
             <el-button
               class="btn-add"
               type="success"
-              @click="exportljwc()"
+              @click="exportljwclcf()"
               style="margin-left: 0px"
               icon="el-icon-bottom"
               size="mini"
-              >导出路基弯沉模板文件</el-button
+              >导出路基弯沉贝克曼梁法模板文件</el-button
             >
             <!-- :disabled="$hasBP('bnt.ql.export')  === false" -->
             <el-button
               class="btn-add"
               type="success"
-              @click="importljwc()"
+              @click="importljwclcf()"
               style="margin-left: 0px"
               icon="el-icon-top"
               size="mini"
-              >导入路基弯沉数据文件</el-button
+              >导入路基弯沉贝克曼梁法数据文件</el-button
             >
             <el-button
               class="btn-add"
@@ -58,6 +58,14 @@
               icon="el-icon-top"
               >查看鉴定表</el-button
             >
+            <el-button
+            class="btn-add"
+            type="primary"
+            size="mini"
+            @click="modify()"
+            style="margin-left: 1px"
+            icon="el-icon-edit"
+            >修改</el-button>
             <el-button
               class="btn-add"
               type="danger"
@@ -91,13 +99,24 @@
           </el-table-column>
           <el-table-column prop="jcsj" label="检测时间" width="100px" />
           <el-table-column prop="zh" label="桩号" width="220px" />
-          <el-table-column prop="yxps" label="允许偏差" />
-          <el-table-column prop="jczh" label="检查桩号" />
-          <el-table-column prop="nyds1" label="碾压读数1" />
-          <el-table-column prop="nyds2" label="碾压读数2" />
-          <el-table-column prop="bz" label="备注"  />
-          <el-table-column prop="xh" label="序号" width="50px"/>
+          <el-table-column prop="yswcz" label="验收弯沉值(0.01mm)" width="180px"/>
+          <el-table-column prop="jgcc" label="结构层次" />
+          <el-table-column prop="wdyxxs" label="温度影响系数" width="120px"/>
+          <el-table-column prop="jjyxxs" label="季节影响系数" width="120px"/>
           
+
+          <el-table-column prop="jglx" label="结构类型" />
+          <el-table-column prop="mbkkzb" label="目标可靠指标" width="120px"/>
+          <el-table-column prop="sdyxxs" label="湿度影响系数" width="120px"/>
+          <el-table-column prop="lcz" label="落锤重(T)" width="120px"/>
+          <el-table-column prop="ltqy" label="轮胎气压(MPa)" width="120px"/>
+          <el-table-column prop="yqmc" label="仪器名称" />
+          <el-table-column prop="cjzh" label="抽检桩号" />
+          <el-table-column prop="cd" label="车道" />
+          <el-table-column prop="scwcz" label="实测弯沉值(0.01㎜)" width="180px"/>
+          <el-table-column prop="lbwd" label="路表温度" />
+          <el-table-column prop="xh" label="序号" width="50px"/>  
+          <el-table-column prop="bz" label="备注"  />
           <el-table-column prop="createtime" label="创建时间" />
         </el-table>
         <!-- 分页组件 -->
@@ -150,7 +169,7 @@
           </span>
         </el-dialog>
         <el-dialog
-         title="路基弯沉鉴定表结果"
+         title="路基弯沉落锤法鉴定表结果"
          :visible="dialogVisible1">
          <el-descriptions :column="1"  border>
           <el-descriptions-item>
@@ -171,11 +190,75 @@
          </span>
          
         </el-dialog>
+        <el-dialog title="修改" :visible.sync="dialogVisible2" width="40%" >
+          <el-form ref="dataForm" :model="modifyData"  label-width="150px" size="small" style="padding-right: 40px;">
+            
+            <el-form-item label="检测时间" prop="jcsj">
+              <el-input v-model="modifyData.jcsj"></el-input>
+            </el-form-item>
+            <el-form-item label="桩号" prop="zh">
+              <el-input v-model="modifyData.zh"></el-input>
+            </el-form-item>
+            <el-form-item label="设计弯沉值(0.01mm)" prop="scwcz">
+              <el-input v-model="modifyData.sjwcz"></el-input>
+            </el-form-item>
+            <el-form-item label="结构层次" prop="jgcc">
+              <el-input v-model="modifyData.jgcc"></el-input>
+            </el-form-item>
+            <el-form-item label="温度影响系数" prop="wdyxxs">
+              <el-input v-model="modifyData.wdyxxs"></el-input>
+            </el-form-item>
+            <el-form-item label="季节影响系数" prop="jjyxxs">
+              <el-input v-model="modifyData.jjyxxs"></el-input>
+            </el-form-item>
+            <el-form-item label="结构类型" prop="jglx">
+              <el-input v-model="modifyData.jglx"></el-input>
+            </el-form-item>
+            <el-form-item label="目标可靠指标" prop="mbkkzb">
+              <el-input v-model="modifyData.mbkkzb"></el-input>
+            </el-form-item>
+            <el-form-item label="湿度影响系数" prop="sdyxxs">
+              <el-input v-model="modifyData.sdyxxs"></el-input>
+            </el-form-item>
+            <el-form-item label="落锤重(T)" prop="lcz">
+              <el-input v-model="modifyData.lcz"></el-input>
+            </el-form-item>
+            <el-form-item label="仪器名称" prop="yqmc">
+              <el-input v-model="modifyData.yqmc"></el-input>
+            </el-form-item>
+            <el-form-item label="抽检桩号" prop="cjzh">
+              <el-input v-model="modifyData.cjzh"></el-input>
+            </el-form-item>
+            <el-form-item label="车道" prop="cd">
+              <el-input v-model="modifyData.mbkkzb"></el-input>
+            </el-form-item>
+            <el-form-item label="实测弯沉值(0.01㎜)" prop="scwcz">
+              <el-input v-model="modifyData.scwcz"></el-input>
+            </el-form-item>
+            <el-form-item label="路表温度" prop="lbwd">
+              <el-input v-model="modifyData.lbwd"></el-input>
+            </el-form-item>
+            <el-form-item label="序号" prop="xh">
+              <el-input v-model="modifyData.xh"></el-input>
+            </el-form-item>
+            <el-form-item label="备注" prop="bz">
+              <el-input v-model="modifyData.bz"></el-input>
+            </el-form-item>
+            <el-form-item label="创建时间" prop="createtime">
+              <el-input v-model="modifyData.createtime"></el-input>
+            </el-form-item>
+            
+          </el-form>
+          <span slot="footer" class="dialog-footer">
+            <el-button @click="dialogVisible2 = false" size="small" icon="el-icon-refresh-right">取 消</el-button>
+            <el-button type="primary" icon="el-icon-check" @click="update()" size="small">确 定</el-button>
+          </span>
+      </el-dialog>
       </div>
     </template>
     <script>
     // 引入定义接口js文件
-    import api from "@/api/project/fbgc/ljgc/ljwc.js";
+    import api from "@/api/project/fbgc/ljgc/ljwclcf.js";
     import { getSystemErrorMap } from "util";
     import FileSaver from "file-saver"
     export default {
@@ -201,12 +284,14 @@
           multipleSelection: [], // 批量删除选中的记录列表
           dialogVisible: false,
           dialogVisible1:false,
+          dialogVisible2:false,
           proname:this.$route.query.projecttitle,
           htd:this.$route.query.htdname,
           fbgcName:this.$route.query.fbgcName,
           hdgqd: {},
           file:'',// 待上传文件
-          fileList:[]
+          fileList:[],
+          modifyData:{}
         };
       },
       created() {
@@ -224,7 +309,7 @@
           let commonInfoVo={}
           commonInfoVo.proname=this.proname
           commonInfoVo.htd=this.htd
-          commonInfoVo.fbgc='路基土石方(石方路基)'
+          commonInfoVo.fbgc='lcf'
           api.scjdb(commonInfoVo).then((res) => {
             
             api.download(commonInfoVo.proname,commonInfoVo.htd).then((response)=>{
@@ -249,7 +334,7 @@
             let commonInfoVo={}
             commonInfoVo.proname=this.proname
             commonInfoVo.htd=this.htd
-            commonInfoVo.fbgc='路基土石方(石方路基)'
+            commonInfoVo.fbgc='lcf'
             api.lookjdb(commonInfoVo).then((res)=>{
               console.log('sdsds',res)
               this.descriptions['合格点数']=res.data[0]["合格点数"]
@@ -257,7 +342,7 @@
               this.descriptions['合格率']=res.data[0]["合格率"]
             })
         },
-        importljysdcj() {
+        importljwclcf() {
           this.dialogImportVisible = true;
         },
         // 上传文件触发
@@ -275,9 +360,9 @@
           fd.append('file',this.fileList[0].raw)
           fd.append('proname',this.proname)
           fd.append('htd',this.htd)
-          fd.append('fbgc','路基土石方(石方路基)')
+          fd.append('fbgc','lcf')
           
-          api.importljysdcj(fd).then((res)=>{
+          api.importljwclcf(fd).then((res)=>{
             console.log('res',res)
             if(res.message=='成功'){
               this.fetchData();
@@ -296,13 +381,13 @@
           
           
         },
-        exportljysdcj() {
+        exportljwclcf() {
           let projectname = this.proname;
           let htd =this.htd
           let fbgc=this.fbgcName
           
           
-          api.exportljysdcj().then((res) => {
+          api.exportljwclcf().then((res) => {
             const objectUrl = URL.createObjectURL(
               new Blob([res.data], {
                 type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
@@ -310,12 +395,50 @@
             );
             const link = document.createElement("a");
             // 设置导出的文件名称
-            link.download = projectname +htd+fbgc+ `路基压实度沉降` + ".xlsx";
+            link.download = projectname +htd+fbgc+ `路基压弯沉落锤法` + ".xlsx";
             link.style.display = "none";
             link.href = objectUrl;
             link.click();
             document.body.appendChild(link);
           });
+        },
+        modify(){
+          if (this.multipleSelection.length === 0) {
+            this.$message.warning("请选择要修改的记录！");
+            return;
+          }
+          if (this.multipleSelection.length > 1) {
+            this.$message.warning("一次只能修改一条记录！");
+            return;
+          }
+          this.modifyData={}
+          api.getById(this.multipleSelection[0].id).then((res)=>{
+            if(res.message=='成功'){
+              this.dialogVisible2=true
+              this.modifyData=res.data
+            }
+            else{
+              this.$alert('出错')
+            }
+          })
+          
+        },
+        update(){
+          api.modify(this.modifyData).then((res)=>{
+            if(res.message=='成功'){
+              this.$message({
+                type: "success",
+                message: "修改成功!",
+              });
+              // 刷新页面
+              this.dialogVisible2=false
+              
+              this.fetchData();
+            }
+            else{
+              this.$alert('出错')
+            }
+          })
         },
         // 批量删除
         batchRemove() {
@@ -355,7 +478,7 @@
         fetchData() {
           this.searchObj.proname = this.proname;
           this.searchObj.htd=this.htd
-          this.searchObj.fbgc='路基土石方(石方路基)'
+          this.searchObj.fbgc='lcf'
           console.log('eeee',this.htd)
           // 调用api
           api.pageList(this.page, this.limit, this.searchObj).then((response) => {

@@ -59,6 +59,7 @@ export default {
         
         this.flag=1
       }else if(fbgcName == "路面工程"){
+        this.$router.push({path:"/sysproject/fbgc/lmlist",query:{projecttitle:projecttitle,htdname:htdname,fbgcName:fbgcName}})
         //this.$router.push("/sysproject/fbgc/lmlist")
         this.flag=2
       }else if(fbgcName == "交安工程"){

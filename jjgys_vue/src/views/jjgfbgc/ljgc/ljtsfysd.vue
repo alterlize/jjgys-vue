@@ -41,7 +41,7 @@
               style="margin-left: 0px"
               icon="el-icon-bottom"
               size="mini"
-              :disabled="flag==false"
+              v-if="flag==false"
               >导出压实度灰土模板文件</el-button
             >
             <el-button
@@ -51,7 +51,7 @@
               style="margin-left: 0px"
               icon="el-icon-bottom"
               size="mini"
-              :disabled="flag==true"
+              v-if="flag==true"
               >导出压实度沙砾模板文件</el-button
             >
             <!-- :disabled="$hasBP('bnt.ql.export')  === false" -->
@@ -62,7 +62,7 @@
               style="margin-left: 0px"
               icon="el-icon-top"
               size="mini"
-              :disabled="flag==false"
+              v-if="flag==false"
               >导入压实度灰土数据文件</el-button
             >
             <el-button
@@ -72,7 +72,7 @@
               style="margin-left: 0px"
               icon="el-icon-top"
               size="mini"
-              :disabled="flag==true"
+              v-if="flag==true"
               >导入压实度沙砾数据文件</el-button
             >
             <el-button

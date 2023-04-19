@@ -192,10 +192,16 @@ export const constantRoutes = [
             meta: { title: '路基压实度沉降' }
           },
           {
-            path: 'ljgc/ljwc',
+            path: 'ljgc/ljwcbkmlf',
             hidden: true,
-            component: () => import('@/views/jjgfbgc/ljgc/ljwc'),
-            meta: { title: '路基弯沉' }
+            component: () => import('@/views/jjgfbgc/ljgc/ljwcbkmlf'),
+            meta: { title: '路基弯沉贝克曼梁法' }
+          },
+          {
+            path: 'ljgc/ljwclcf',
+            hidden: true,
+            component: () => import('@/views/jjgfbgc/ljgc/ljwclcf'),
+            meta: { title: '路基弯沉落锤法' }
           },
           {
             path: 'ljgc/ljbp',
@@ -227,7 +233,74 @@ export const constantRoutes = [
             component: () => import('@/views/jjgfbgc/ljgc/zdgqd'),
             meta: { title: '支挡砼强度' }
           },
+          {
+            path: 'ljgc/zdbmpzd',
+            hidden: true,
+            component: () => import('@/views/jjgfbgc/ljgc/zdbmpzd'),
+            meta: { title: '支挡表面平整度' }
+          },
 
+          {
+            path: 'lmgc/lqlmysd',
+            hidden: true,
+            component: () => import('@/views/jjgfbgc/lmgc/lqlmysd'),
+            meta: { title: '沥青路面压实度' }
+          },
+          {
+            path: 'lmgc/lmwcbkmlf',
+            hidden: true,
+            component: () => import('@/views/jjgfbgc/lmgc/lmwcbkmlf'),
+            meta: { title: '路面弯沉贝克曼梁法' }
+          },
+          {
+            path: 'lmgc/lmwclcf',
+            hidden: true,
+            component: () => import('@/views/jjgfbgc/lmgc/lmwclcf'),
+            meta: { title: '路面弯沉落锤法' }
+          },
+          {
+            path: 'lmgc/lqlmssxs',
+            hidden: true,
+            component: () => import('@/views/jjgfbgc/lmgc/lqlmssxs'),
+            meta: { title: '沥青路面渗水系数' }
+          },
+          {
+            path: 'lmgc/hntlmqd',
+            hidden: true,
+            component: () => import('@/views/jjgfbgc/lmgc/hntlmqd'),
+            meta: { title: '混凝土路面强度' }
+          },
+          {
+            path: 'lmgc/tlmxlbgc',
+            hidden: true,
+            component: () => import('@/views/jjgfbgc/lmgc/tlmxlbgc'),
+            meta: { title: '砼路面相邻板高差' }
+          },
+          {
+            path: 'lmgc/lmgzsd',
+            hidden: true,
+            component: () => import('@/views/jjgfbgc/lmgc/lmgzsd'),
+            meta: { title: '路面构造深度手工铺砂法' }
+          },
+          {
+            path: 'lmgc/gslqlmhdzx',
+            hidden: true,
+            component: () => import('@/views/jjgfbgc/lmgc/gslqlmhdzx'),
+            meta: { title: '高速沥青路面厚度钻芯法' }
+          },
+          {
+            path: 'lmgc/hntlmhdzx',
+            hidden: true,
+            component: () => import('@/views/jjgfbgc/lmgc/hntlmhdzx'),
+            meta: { title: '混凝土路面厚度钻芯法' }
+          },
+          {
+            path: 'lmgc/lmhp',
+            hidden: true,
+            component: () => import('@/views/jjgfbgc/lmgc/lmhp'),
+            meta: { title: '路面横坡' }
+          },
+          
 
           {
             path: 'qlgc/qmpzd',
@@ -308,6 +381,48 @@ export const constantRoutes = [
             hidden: true,
             component: () => import('@/views/jjgfbgc/sdgc/dmpzd.vue'),
             meta: { title: '隧道大面平整度' }
+          },
+          {
+            path: 'sdgc/lqlmysd',
+            hidden: true,
+            component: () => import('@/views/jjgfbgc/sdgc/lqlmysd.vue'),
+            meta: { title: '隧道沥青路面压实度' }
+          },
+          {
+            path: 'sdgc/lqlmssxs',
+            hidden: true,
+            component: () => import('@/views/jjgfbgc/sdgc/lqlmssxs.vue'),
+            meta: { title: '隧道沥青路面渗水系数' }
+          },
+          {
+            path: 'sdgc/hntlmqd',
+            hidden: true,
+            component: () => import('@/views/jjgfbgc/sdgc/hntlmqd.vue'),
+            meta: { title: '隧道混凝土路面强度' }
+          },
+          {
+            path: 'sdgc/tlmxlbgc',
+            hidden: true,
+            component: () => import('@/views/jjgfbgc/sdgc/tlmxlbgc.vue'),
+            meta: { title: '隧道砼路面相邻板高差' }
+          },
+          {
+            path: 'sdgc/lmgzsd',
+            hidden: true,
+            component: () => import('@/views/jjgfbgc/sdgc/lmgzsd.vue'),
+            meta: { title: '隧道路面构造深度手工铺砂法' }
+          },
+          {
+            path: 'sdgc/lqlmhdzx',
+            hidden: true,
+            component: () => import('@/views/jjgfbgc/sdgc/lqlmhdzx.vue'),
+            meta: { title: '隧道沥青路面厚度钻芯法' }
+          },
+          {
+            path: 'sdgc/hntlmhdzx',
+            hidden: true,
+            component: () => import('@/views/jjgfbgc/sdgc/hntlmhdzx.vue'),
+            meta: { title: '隧道混凝土路面厚度钻芯法' }
           },
           {
             path: 'sdgc/sdhp',

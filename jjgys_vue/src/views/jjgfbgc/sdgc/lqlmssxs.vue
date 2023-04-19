@@ -24,21 +24,21 @@
             <el-button
               class="btn-add"
               type="success"
-              @click="exportsdhp()"
+              @click="exportlqlmssxs()"
               style="margin-left: 0px"
               icon="el-icon-bottom"
               size="mini"
-              >导出隧道横坡文件</el-button
+              >导出隧道沥青路面渗水系数文件</el-button
             >
             <!-- :disabled="$hasBP('bnt.ql.export')  === false" -->
             <el-button
               class="btn-add"
               type="success"
-              @click="importsdhp()"
+              @click="importlqlmssxs()"
               style="margin-left: 0px"
               icon="el-icon-top"
               size="mini"
-              >导入隧道横坡数据文件</el-button
+              >导入隧道沥青路面渗水系数数据文件</el-button
             >
             <el-button
               class="btn-add"
@@ -97,17 +97,19 @@
               {{ (page - 1) * limit + scope.$index + 1 }}
             </template>
           </el-table-column>
-          <el-table-column prop="jcsj" label="检测时间" width="100px" />
-          <el-table-column prop="sdmc" label="隧道名称" width="180px" />
-          <el-table-column prop="lmlx" label="路面类型" width="180px" />
-          <el-table-column prop="zh" label="桩号" />
-          <el-table-column prop="wz" label="位置" />
-          <el-table-column prop="qsds" label="前视读数(mm)" width="120px"/>
-          <el-table-column prop="hsds" label="后视读数(mm)" width="120px"/>
-          <el-table-column prop="length" label="长" />
-          <el-table-column prop="sjz" label="设计值(%)" />
-          <el-table-column prop="yxps" label="允许偏差(%)" width="120px"/>
-          <el-table-column prop="createtime" label="创建时间" width="100px"/>
+            <el-table-column prop="jcsj" label="检测时间" width="100px" />
+            <el-table-column prop="sdmc" label="隧道名称" width="220px" />
+            <el-table-column prop="zh" label="桩号" />
+            <el-table-column prop="wz" label="位置" />
+            <el-table-column prop="sjhd" label="设计厚度" />
+            <el-table-column prop="zgy1" label="左拱腰1" />
+            <el-table-column prop="zgy2" label="左拱腰2" />
+            <el-table-column prop="zgy3" label="左拱腰3" />
+            <el-table-column prop="ygy1" label="右拱腰1" />
+            <el-table-column prop="ygy2" label="右拱腰2" />
+            <el-table-column prop="ygy3" label="右拱腰3" />
+            <el-table-column prop="gd" label="拱顶" />
+            <el-table-column prop="createtime" label="创建时间" width="100px" />
         </el-table>
         <!-- 分页组件 -->
         <el-pagination
@@ -159,7 +161,7 @@
           </span>
         </el-dialog>
         <el-dialog
-         title="隧道横坡鉴定表结果"
+         title="隧道沥青路面渗水系数鉴定表结果"
          :visible="dialogVisible1">
          <el-table
           
@@ -177,65 +179,71 @@
           <el-table-column prop="合格点数" label="合格点数" />
           
           <el-table-column prop="合格率" label="合格率(%)" />
-          <el-table-column prop="总点数" label="总点数"  />
+          <el-table-column prop="检测总点数" label="检测总点数" width="100px" />
           <el-table-column prop="检测项目" label="检测项目" width="250px"/>
           
          
           
           
         </el-table>
-         
          <span slot="footer" class="dialog-footer">
           <el-button type="primary"  @click="dialogVisible1 = false">关闭</el-button>
          </span>
          
         </el-dialog>
         <el-dialog title="修改" :visible.sync="dialogVisible2" width="40%" >
-          <el-form ref="dataForm" :model="modifyData"  label-width="150px" size="small" style="padding-right: 40px;">
-            
+          <el-form ref="dataForm" :model="modifyData"  label-width="100px" size="small" style="padding-right: 40px;">
             <el-form-item label="检测时间" prop="jcsj">
-              <el-input v-model="modifyData.jcsj"></el-input>
+            <el-input v-model="modifyData.jcsj"></el-input>
             </el-form-item>
             <el-form-item label="隧道名称" prop="sdmc">
-              <el-input v-model="modifyData.sdmc"></el-input>
-            </el-form-item>
-            <el-form-item label="路面类型" prop="lmlx">
-              <el-input v-model="modifyData.lmlx"></el-input>
+            <el-input v-model="modifyData.sdmc"></el-input>
             </el-form-item>
             <el-form-item label="桩号" prop="zh">
-              <el-input v-model="modifyData.zh"></el-input>
+            <el-input v-model="modifyData.zh"></el-input>
             </el-form-item>
             <el-form-item label="位置" prop="wz">
-              <el-input v-model="modifyData.wz"></el-input>
+            <el-input v-model="modifyData.wz"></el-input>
             </el-form-item>
-            <el-form-item label="前视读数(mm)" prop="qsds">
-              <el-input v-model="modifyData.qsds"></el-input>
+            <el-form-item label="设计厚度" prop="sjhd">
+            <el-input v-model="modifyData.sjhd"></el-input>
             </el-form-item>
-            <el-form-item label="后视读数(mm)" prop="hsds">
-              <el-input v-model="modifyData.hsds"></el-input>
+            <el-form-item label="左拱腰1" prop="zgy1">
+            <el-input v-model="modifyData.zgy1"></el-input>
             </el-form-item>
-            <el-form-item label="长" prop="length">
-              <el-input v-model="modifyData.length"></el-input>
+            <el-form-item label="左拱腰2" prop="zgy2">
+            <el-input v-model="modifyData.zgy2"></el-input>
             </el-form-item>
-            <el-form-item label="允许偏差(%)" prop="yxps">
-              <el-input v-model="modifyData.yxps"></el-input>
+            <el-form-item label="左拱腰3" prop="zgy3">
+            <el-input v-model="modifyData.zgy3"></el-input>
+            </el-form-item>
+            <el-form-item label="右拱腰1" prop="ygy1">
+            <el-input v-model="modifyData.ygy1"></el-input>
+            </el-form-item>
+            <el-form-item label="右拱腰2" prop="ygy2">
+            <el-input v-model="modifyData.ygy2"></el-input>
+            </el-form-item>
+            <el-form-item label="右拱腰3" prop="右拱腰3">
+            <el-input v-model="modifyData.ygy3"></el-input>
+            </el-form-item>
+            <el-form-item label="拱顶" prop="gd">
+            <el-input v-model="modifyData.gd"></el-input>
             </el-form-item>
             
             <el-form-item label="创建时间" prop="createtime">
-              <el-input v-model="modifyData.createtime"></el-input>
+            <el-input v-model="modifyData.createtime"></el-input>
             </el-form-item>
-            
           </el-form>
           <span slot="footer" class="dialog-footer">
             <el-button @click="dialogVisible2 = false" size="small" icon="el-icon-refresh-right">取 消</el-button>
             <el-button type="primary" icon="el-icon-check" @click="update()" size="small">确 定</el-button>
           </span>
-      </el-dialog>
+        </el-dialog>
       </div>
     </template>
     <script>
     // 引入定义接口js文件
-    import api from "@/api/project/fbgc/sdgc/sdhp.js";
+    import api from "@/api/project/fbgc/sdgc/lqlmssxs.js";
     import { getSystemErrorMap } from "util";
     import FileSaver from "file-saver"
     export default {
@@ -282,19 +290,19 @@
           let commonInfoVo={}
           commonInfoVo.proname=this.proname
           commonInfoVo.htd=this.htd
-          commonInfoVo.fbgc='桥面系'
+          commonInfoVo.fbgc='衬砌'
           api.scjdb(commonInfoVo).then((res) => {
             
             api.download(commonInfoVo.proname,commonInfoVo.htd,commonInfoVo.fbgc).then((response)=>{
               
               var temp = response.headers["content-disposition"]
               
+              var temp = response.headers["content-disposition"]
               var filename=temp.split('=')[1]
               filename=filename.replace(/['"]/g, '')
               console.log('鉴定表',filename)
               console.log('鉴定表',decodeURI(filename))
               FileSaver.saveAs(response.data,decodeURI(filename))
-              
               
             })
             
@@ -306,13 +314,13 @@
             let commonInfoVo={}
             commonInfoVo.proname=this.proname
             commonInfoVo.htd=this.htd
-            commonInfoVo.fbgc='桥面系'
+            commonInfoVo.fbgc='衬砌'
             api.lookjdb(commonInfoVo).then((res)=>{
               console.log('tttt',res)
               this.descriptions=res.data
             })
         },
-        importsdhp() {
+        importlqlmssxs() {
           this.dialogImportVisible = true;
         },
         // 上传文件触发
@@ -330,9 +338,9 @@
           fd.append('file',this.fileList[0].raw)
           fd.append('proname',this.proname)
           fd.append('htd',this.htd)
-          fd.append('fbgc','桥面系')
+          fd.append('fbgc','衬砌')
           
-          api.importsdhp(fd).then((res)=>{
+          api.importlqlmssxs(fd).then((res)=>{
             console.log('res',res)
             if(res.message=='成功'){
               this.fetchData();
@@ -351,13 +359,13 @@
           
           
         },
-        exportsdhp() {
+        exportlqlmssxs() {
           let projectname = this.proname;
           let htd =this.htd
           let fbgc=this.fbgcName
           
           debugger
-          api.exportsdhp().then((res) => {
+          api.exportlqlmssxs().then((res) => {
             const objectUrl = URL.createObjectURL(
               new Blob([res.data], {
                 type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
@@ -365,13 +373,14 @@
             );
             const link = document.createElement("a");
             // 设置导出的文件名称
-            link.download = projectname +htd+fbgc+ `隧道横坡` + ".xlsx";
+            link.download = projectname +htd+fbgc+ `隧道沥青路面渗水系数` + ".xlsx";
             link.style.display = "none";
             link.href = objectUrl;
             link.click();
             document.body.appendChild(link);
           });
         },
+        // 修改
         modify(){
           if (this.multipleSelection.length === 0) {
             this.$message.warning("请选择要修改的记录！");
@@ -448,7 +457,7 @@
         fetchData() {
           this.searchObj.proname = this.proname;
           this.searchObj.htd=this.htd
-          this.searchObj.fbgc='桥面系'
+          this.searchObj.fbgc='衬砌'
           
           // 调用api
           api.pageList(this.page, this.limit, this.searchObj).then((response) => {

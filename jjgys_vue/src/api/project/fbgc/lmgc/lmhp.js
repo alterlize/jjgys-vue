@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-const api_name = '/jjg/fbgc/ljgc/ljwc'
+const api_name = '/jjg/fbgc/sdgc/sdhp'
 
 export default {
   // 生成鉴定表
@@ -13,27 +13,27 @@ export default {
     })
   },
   // 下载鉴定表
-  download(proname,htd){
+  download(proname,htd,fbgc){
     return request({
-      url: `${api_name}/download?proname=`+proname+'&htd='+htd,
+      url: `${api_name}/download?proname=`+proname+'&htd='+htd+'&fbgc='+fbgc,
       method: 'get',
       responseType: 'blob',
       
       
     })
   },
-  // 导出模板文件
-  exportljwc(){
+  // 导出模板
+  exportlmhp(){
     return request({
-      url: `${api_name}/exportljwc`,
+      url: `${api_name}/export`,
       method: 'get',
       responseType: 'blob', // 使用blob下载
     })
   },
   // 导入文件
-  importljwc(params){
+  importlmhp(params){
     return request({
-      url: `${api_name}/importljwc`,
+      url: `${api_name}/importsdhp`,
       method: 'post',
       data:params, // 使用blob下载
       
@@ -46,6 +46,22 @@ export default {
       method: 'post',
       data:params, 
       
+    })
+  },
+  // 通过id查询
+  getById(id){
+    return request({
+      url: `${api_name}/getSdhp`+id,
+      method: 'get',
+      
+    })
+  },
+   // 修改
+   modify(data) {
+    return request({
+      url: `${api_name}/update`,
+      method: `post`,
+      data: data
     })
   },
    // 批量删除

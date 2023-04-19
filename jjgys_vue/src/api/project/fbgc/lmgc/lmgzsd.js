@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-const api_name = '/jjg/fbgc/qlgc/qmhp'
+const api_name = '/jjg/fbgc/sdgc/sdhp'
 
 export default {
   // 生成鉴定表
@@ -23,7 +23,7 @@ export default {
     })
   },
   // 导出模板
-  exportqmpzd(){
+  exportlmgzsd(){
     return request({
       url: `${api_name}/export`,
       method: 'get',
@@ -31,9 +31,9 @@ export default {
     })
   },
   // 导入文件
-  importqmpzd(params){
+  importlmgzsd(params){
     return request({
-      url: `${api_name}/importqmhp`,
+      url: `${api_name}/importsdhp`,
       method: 'post',
       data:params, // 使用blob下载
       
@@ -51,7 +51,7 @@ export default {
   // 通过id查询
   getById(id){
     return request({
-      url: `${api_name}/getQmhp`+id,
+      url: `${api_name}/getSdhp`+id,
       method: 'get',
       
     })

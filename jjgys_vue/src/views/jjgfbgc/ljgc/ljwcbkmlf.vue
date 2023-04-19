@@ -24,21 +24,21 @@
           <el-button
             class="btn-add"
             type="success"
-            @click="exportqmgzsd()"
+            @click="exportljwcbkmlf()"
             style="margin-left: 0px"
             icon="el-icon-bottom"
             size="mini"
-            >导出桥面构造深度手工铺砂法文件</el-button
+            >导出路基弯沉贝克曼梁法模板文件</el-button
           >
           <!-- :disabled="$hasBP('bnt.ql.export')  === false" -->
           <el-button
             class="btn-add"
             type="success"
-            @click="importqmgzsd()"
+            @click="importljwcbkmlf()"
             style="margin-left: 0px"
             icon="el-icon-top"
             size="mini"
-            >导入桥面构造深度手工铺砂法数据文件</el-button
+            >导入路基弯沉贝克曼梁法数据文件</el-button
           >
           <el-button
             class="btn-add"
@@ -97,19 +97,23 @@
             {{ (page - 1) * limit + scope.$index + 1 }}
           </template>
         </el-table-column>
-        <el-table-column prop="jcsj" label="检测日期" width="100px" />
-        <el-table-column prop="jgmc" label="结构名称" width="220px" />
-        <el-table-column prop="abm" label="ABM" />
-        <el-table-column prop="zh" label="桩号" />
+        <el-table-column prop="jcsj" label="检测时间" width="100px" />
+        <el-table-column prop="zh" label="桩号" width="220px" />
+        <el-table-column prop="yswcz" label="验收弯沉值(0.01mm)" width="180px"/>
+        <el-table-column prop="mbkkzb" label="目标可靠指标" width="120px"/>
+        <el-table-column prop="wdyxxs" label="温度影响系数" width="120px"/>
+        <el-table-column prop="jjyxxs" label="季节影响系数" width="120px"/>
+        <el-table-column prop="jgcc" label="结构层次" />
+        <el-table-column prop="jglx" label="结构类型" />
+        <el-table-column prop="hzz" label="后轴重(T)" width="100px"/>
+        <el-table-column prop="ltqy" label="轮胎气压(MPa)" width="120px"/>
+        <el-table-column prop="cjzh" label="抽检桩号" />
         <el-table-column prop="cd" label="车道" />
-        <el-table-column prop="sjzxz" label="设计最小值" />
-        <el-table-column prop="sjzdz" label="设计最大值" />
-        <el-table-column prop="cd1d1" label="测点1D1(㎜)" />
-        <el-table-column prop="cd1d2" label="测点1D2(㎜)" />
-        <el-table-column prop="cd2d1" label="测点2D1(㎜)" />
-        <el-table-column prop="cd2d2" label="测点2D2(㎜)" />
-        <el-table-column prop="cd3d1" label="测点3D1(㎜)" />
-        <el-table-column prop="cd3d2" label="测点3D2(㎜)" />
+        <el-table-column prop="zz" label="左值(0.01mm)" width="120px"/>
+        <el-table-column prop="yz" label="右值(0.01mm)" width="120px"/>
+        <el-table-column prop="lbwd" label="路表温度" />
+        <el-table-column prop="bz" label="备注"  />
+        <el-table-column prop="xh" label="序号" width="50px"/>  
         <el-table-column prop="createtime" label="创建时间" />
       </el-table>
       <!-- 分页组件 -->
@@ -162,7 +166,7 @@
         </span>
       </el-dialog>
       <el-dialog
-       title="桥面桥面构造深度手工铺砂法鉴定表结果"
+       title="路基弯沉贝克曼梁法鉴定表结果"
        :visible="dialogVisible1">
        <el-descriptions :column="1"  border>
         <el-descriptions-item>
@@ -186,44 +190,60 @@
       <el-dialog title="修改" :visible.sync="dialogVisible2" width="40%" >
         <el-form ref="dataForm" :model="modifyData"  label-width="150px" size="small" style="padding-right: 40px;">
           
-          <el-form-item label="检测日期" prop="jcsj">
+          <el-form-item label="检测时间" prop="jcsj">
             <el-input v-model="modifyData.jcsj"></el-input>
           </el-form-item>
-          <el-form-item label="结构名称" prop="jgmc">
-            <el-input v-model="modifyData.jgmc"></el-input>
+          <el-form-item label="桩号" prop="zh">
+            <el-input v-model="modifyData.zh"></el-input>
           </el-form-item>
-          <el-form-item label="ABM" prop="abm">
-            <el-input v-model="modifyData.abm"></el-input>
+          <el-form-item label="验收弯沉值(0.01mm)" prop="yswcz">
+            <el-input v-model="modifyData.yswcz"></el-input>
+          </el-form-item>
+          <el-form-item label="目标可靠指标" prop="mbkkzb">
+            <el-input v-model="modifyData.mbkkzb"></el-input>
+          </el-form-item>
+          
+          <el-form-item label="温度影响系数" prop="wdyxxs">
+            <el-input v-model="modifyData.wdyxxs"></el-input>
+          </el-form-item>
+          <el-form-item label="季节影响系数" prop="jjyxxs">
+            <el-input v-model="modifyData.jjyxxs"></el-input>
+          </el-form-item>
+          <el-form-item label="结构层次" prop="jgcc">
+            <el-input v-model="modifyData.jgcc"></el-input>
+          </el-form-item>
+          <el-form-item label="结构类型" prop="jglx">
+            <el-input v-model="modifyData.jglx"></el-input>
+          </el-form-item>
+          
+          
+          <el-form-item label="后轴重(T)" prop="hzcz">
+            <el-input v-model="modifyData.hzz"></el-input>
+          </el-form-item>
+          <el-form-item label="轮胎气压(MPa)" prop="ltqy">
+            <el-input v-model="modifyData.ltqy"></el-input>
+          </el-form-item>
+          <el-form-item label="抽检桩号" prop="cjzh">
+            <el-input v-model="modifyData.cjzh"></el-input>
           </el-form-item>
           <el-form-item label="车道" prop="cd">
-            <el-input v-model="modifyData.cd"></el-input>
+            <el-input v-model="modifyData.mbkkzb"></el-input>
           </el-form-item>
-          <el-form-item label="设计最小值" prop="sjzxz">
-            <el-input v-model="modifyData.sjzxz"></el-input>
+          <el-form-item label="左值(0.01mm)" prop="zz">
+            <el-input v-model="modifyData.zz"></el-input>
           </el-form-item>
-          <el-form-item label="设计最大值" prop="sjzdz">
-            <el-input v-model="modifyData.sjzdz"></el-input>
+          <el-form-item label="右值(0.01mm)" prop="yz">
+            <el-input v-model="modifyData.yz"></el-input>
           </el-form-item>
-          <el-form-item label="测点1D1(㎜)" prop="cd1d1">
-            <el-input v-model="modifyData.cd1d1"></el-input>
+          <el-form-item label="路表温度" prop="lbwd">
+            <el-input v-model="modifyData.lbwd"></el-input>
           </el-form-item>
-          <el-form-item label="测点1D2(㎜)" prop="cd1d2">
-            <el-input v-model="modifyData.cd1d2"></el-input>
+          <el-form-item label="序号" prop="xh">
+            <el-input v-model="modifyData.xh"></el-input>
           </el-form-item>
-          <el-form-item label="测点2D1(㎜)" prop="cd2d1">
-            <el-input v-model="modifyData.cd2d1"></el-input>
+          <el-form-item label="备注" prop="bz">
+            <el-input v-model="modifyData.bz"></el-input>
           </el-form-item>
-          <el-form-item label="测点2D2(㎜)" prop="cd2d2">
-            <el-input v-model="modifyData.cd2d2"></el-input>
-          </el-form-item>
-          <el-form-item label="测点3D1(㎜)" prop="cd3d1">
-            <el-input v-model="modifyData.cd3d1"></el-input>
-          </el-form-item>
-          <el-form-item label="测点3D2(㎜)" prop="cd3d2">
-            <el-input v-model="modifyData.cd3d2"></el-input>
-          </el-form-item>
-          
-          
           <el-form-item label="创建时间" prop="createtime">
             <el-input v-model="modifyData.createtime"></el-input>
           </el-form-item>
@@ -238,7 +258,7 @@
   </template>
   <script>
   // 引入定义接口js文件
-  import api from "@/api/project/fbgc/qlgc/qmgzsd.js";
+  import api from "@/api/project/fbgc/ljgc/ljwcbkmlf.js";
   import { getSystemErrorMap } from "util";
   import FileSaver from "file-saver"
   export default {
@@ -289,7 +309,7 @@
         let commonInfoVo={}
         commonInfoVo.proname=this.proname
         commonInfoVo.htd=this.htd
-        commonInfoVo.fbgc='桥面系'
+        commonInfoVo.fbgc='bkmlf'
         api.scjdb(commonInfoVo).then((res) => {
           
           api.download(commonInfoVo.proname,commonInfoVo.htd).then((response)=>{
@@ -314,15 +334,15 @@
           let commonInfoVo={}
           commonInfoVo.proname=this.proname
           commonInfoVo.htd=this.htd
-          commonInfoVo.fbgc='桥面系'
+          commonInfoVo.fbgc='bkmlf'
           api.lookjdb(commonInfoVo).then((res)=>{
-            
+            console.log('sdsds',res)
             this.descriptions['合格点数']=res.data[0]["合格点数"]
             this.descriptions['总点数']=res.data[0]["总点数"]
             this.descriptions['合格率']=res.data[0]["合格率"]
           })
       },
-      importqmgzsd() {
+      importljwcbkmlf() {
         this.dialogImportVisible = true;
       },
       // 上传文件触发
@@ -340,9 +360,9 @@
         fd.append('file',this.fileList[0].raw)
         fd.append('proname',this.proname)
         fd.append('htd',this.htd)
-        fd.append('fbgc','桥面系')
+        fd.append('fbgc','bkmlf')
         
-        api.importqmgzsd(fd).then((res)=>{
+        api.importljwcbkmlf(fd).then((res)=>{
           console.log('res',res)
           if(res.message=='成功'){
             this.fetchData();
@@ -361,13 +381,13 @@
         
         
       },
-      exportqmgzsd() {
+      exportljwcbkmlf() {
         let projectname = this.proname;
         let htd =this.htd
         let fbgc=this.fbgcName
         
-        debugger
-        api.exportqmgzsd().then((res) => {
+        
+        api.exportljwcbkmlf().then((res) => {
           const objectUrl = URL.createObjectURL(
             new Blob([res.data], {
               type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
@@ -375,7 +395,7 @@
           );
           const link = document.createElement("a");
           // 设置导出的文件名称
-          link.download = projectname +htd+fbgc+ `桥面构造深度手工铺砂法` + ".xlsx";
+          link.download = projectname +htd+fbgc+ `路基压弯沉贝克曼梁法` + ".xlsx";
           link.style.display = "none";
           link.href = objectUrl;
           link.click();
@@ -458,13 +478,13 @@
       fetchData() {
         this.searchObj.proname = this.proname;
         this.searchObj.htd=this.htd
-        this.searchObj.fbgc='桥面系'
-        
+        this.searchObj.fbgc='bkmlf'
+        console.log('eeee',this.htd)
         // 调用api
         api.pageList(this.page, this.limit, this.searchObj).then((response) => {
           this.list = response.data.records;
           this.total = response.data.total;
-          console.log('eeee',this.list)
+          console.log('ssss',this.list)
         });
       },
       // 改变每页显示的记录数

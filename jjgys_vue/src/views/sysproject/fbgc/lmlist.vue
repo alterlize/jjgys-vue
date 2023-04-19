@@ -11,39 +11,52 @@
     </div>
 
     <div class="tool-div">
-      <el-col :span="8">
-        <el-card shadow="hover" @click.native="ql()"> 沥青路面压实度 </el-card>
+      <el-row >  
+        <el-card  class="row-title"  > 路面面层 </el-card> 
+      </el-row>
+      <el-row>
+        <el-col :span="4">
+          <el-card shadow="hover"  class="content" align="middle" @click.native="lqlmysd()"> 沥青路面压实度 </el-card>
+        </el-col>
+        <el-col :span="4">
+          <el-card shadow="hover"  class="content" align="middle" @click.native="lmwcbkmlf()"> 路面弯沉贝克曼梁法 </el-card>
+        </el-col>
+        <el-col :span="4">
+          <el-card shadow="hover"  class="content" align="middle" @click.native="lmwclcf()"> 路面弯沉落锤法 </el-card>
+        </el-col>
+        <el-col :span="4">
+          <el-card shadow="hover"  class="content" align="middle" @click.native="lqlmssxs()"> 沥青路面渗水系数 </el-card>
+        </el-col>
+        <el-col :span="4">
+          <el-card shadow="hover"  class="content" align="middle" @click.native="hntlmqd()"> 混凝土路面强度 </el-card>
+        </el-col>
+        <el-col :span="4">
+          <el-card shadow="hover"  class="content" align="middle" @click.native="tlmxlbgc()"> 砼路面相邻板高差 </el-card>
+        </el-col>
+        
+      </el-row>
+     <el-row>
+      <el-col :span="4">
+          <el-card shadow="hover"  class="content" align="middle" @click.native="lmgzsd()"> 路面构造深度手工铺砂法 </el-card>
+        </el-col>
+      <el-col :span="4">
+        <el-card shadow="hover"  class="content" align="middle" @click.native="gslqlmhdzx()"> 高速沥青路面厚度钻芯法 </el-card>
       </el-col>
-      <el-col :span="8">
-        <el-card shadow="hover" @click.native="sd()"> 路面弯沉 </el-card>
+      <el-col :span="4">
+        <el-card shadow="hover"  class="content" align="middle" @click.native="hntlmhdzx()"> 混凝土路面厚度钻芯法 </el-card>
       </el-col>
-      <el-col :span="8">
-        <el-card shadow="hover" @click.native="fhlm()"> 沥青路面渗水系数 </el-card>
+      <el-col :span="4">
+        <el-card shadow="hover"  class="content" align="middle" @click.native="lmhp()"> 路面横坡 </el-card>
       </el-col>
-      <el-col :span="8">
-        <el-card shadow="hover" @click.native="hntlmjzd()"> 混凝土路面强度 </el-card>
+      <el-col :span="4">
+        <el-card shadow="hover"  class="content" align="middle" @click.native="ljxsd()"> 芯样完整性 </el-card>
       </el-col>
-      <el-col :span="8">
-        <el-card shadow="hover" @click.native="sfz()"> 砼路面相邻板高差 </el-card>
+      <el-col :span="4">
+        <el-card shadow="hover"  class="content" align="middle" @click.native="ljxhntlm()"> 厚度 </el-card>
       </el-col>
-      <el-col :span="8">
-        <el-card shadow="hover" @click.native="ljx()"> 路面构造深度手工铺砂法 </el-card>
-      </el-col>
-      <el-col :span="8">
-        <el-card shadow="hover" @click.native="ljxql()"> 高速沥青路面厚度钻芯法 </el-card>
-      </el-col>
-      <el-col :span="8">
-        <el-card shadow="hover" @click.native="ljxsd()"> 混凝土路面厚度钻芯法 </el-card>
-      </el-col>
-      <el-col :span="8">
-        <el-card shadow="hover" @click.native="ljxhntlm()"> 路面横坡 </el-card>
-      </el-col>
-      <el-col :span="8">
-        <el-card shadow="hover" @click.native="ljxsd()"> 芯样完整性 </el-card>
-      </el-col>
-      <el-col :span="8">
-        <el-card shadow="hover" @click.native="ljxhntlm()"> 厚度 </el-card>
-      </el-col> 
+     </el-row>
+      
+       
     </div>
 
      <el-dialog title="导入" :visible.sync="dialogImportVisible" width="480px">
@@ -69,6 +82,8 @@
   </div>
 </template>
 <script>
+import gslqlmhdzx from '@/api/project/fbgc/lmgc/gslqlmhdzx';
+import lmwcbkmlf from '@/api/project/fbgc/lmgc/lmwcbkmlf';
 import projectApi from '@/api/project/projectInfo.js'
 export default {
     name:'lmlist',
@@ -79,10 +94,61 @@ export default {
         projectname: projecttitle,
       },
             dialogImportVisible: false,
-
+            htdname:this.$route.query.htdname,
+            fbgcName:this.$route.query.fbgcName
         }
     },
     methods: {
+    lqlmysd() {
+      let projecttitle = this.$route.query.projecttitle;
+      
+      this.$router.push({path:"/jjgfbgc/lmgc/lqlmysd",query:{projecttitle:projecttitle,htdname:this.htdname,fbgcName:this.fbgcName}});
+    },
+    lmwcbkmlf() {
+      let projecttitle = this.$route.query.projecttitle;
+      
+      this.$router.push({path:"/jjgfbgc/lmgc/lmwcbkmlf",query:{projecttitle:projecttitle,htdname:this.htdname,fbgcName:this.fbgcName}});
+    },
+    lmwclcf() {
+      let projecttitle = this.$route.query.projecttitle;
+      
+      this.$router.push({path:"/jjgfbgc/lmgc/lmwclcf",query:{projecttitle:projecttitle,htdname:this.htdname,fbgcName:this.fbgcName}});
+    },
+    lqlmssxs() {
+      let projecttitle = this.$route.query.projecttitle;
+      
+      this.$router.push({path:"/jjgfbgc/lmgc/lqlmssxs",query:{projecttitle:projecttitle,htdname:this.htdname,fbgcName:this.fbgcName}});
+    },
+    hntlmqd() {
+      let projecttitle = this.$route.query.projecttitle;
+      
+      this.$router.push({path:"/jjgfbgc/lmgc/hntlmqd",query:{projecttitle:projecttitle,htdname:this.htdname,fbgcName:this.fbgcName}});
+    },
+    tlmxlbgc() {
+      let projecttitle = this.$route.query.projecttitle;
+      
+      this.$router.push({path:"/jjgfbgc/lmgc/tlmxlbgc",query:{projecttitle:projecttitle,htdname:this.htdname,fbgcName:this.fbgcName}});
+    },
+    lmgzsd() {
+      let projecttitle = this.$route.query.projecttitle;
+      
+      this.$router.push({path:"/jjgfbgc/lmgc/lmgzsd",query:{projecttitle:projecttitle,htdname:this.htdname,fbgcName:this.fbgcName}});
+    },
+    gslqlmhdzx() {
+      let projecttitle = this.$route.query.projecttitle;
+      
+      this.$router.push({path:"/jjgfbgc/lmgc/gslqlmhdzx",query:{projecttitle:projecttitle,htdname:this.htdname,fbgcName:this.fbgcName}});
+    },
+    hntlmhdzx() {
+      let projecttitle = this.$route.query.projecttitle;
+      
+      this.$router.push({path:"/jjgfbgc/lmgc/hntlmhdzx",query:{projecttitle:projecttitle,htdname:this.htdname,fbgcName:this.fbgcName}});
+    },
+    lmhp() {
+      let projecttitle = this.$route.query.projecttitle;
+      
+      this.$router.push({path:"/jjgfbgc/lmgc/lmhp",query:{projecttitle:projecttitle,htdname:this.htdname,fbgcName:this.fbgcName}});
+    },
     importlmgc() {
       this.dialogImportVisible = true;
     },
@@ -118,3 +184,14 @@ export default {
     
 }
 </script>
+<style>
+.row-title {
+    margin-top: 20px;
+    background: rgb(240, 238, 238);
+    
+    
+  }
+.content{
+  cursor: pointer;
+}
+</style>
